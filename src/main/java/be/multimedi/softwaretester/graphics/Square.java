@@ -5,16 +5,16 @@ public class Square extends Rectangle {
 
     //CONSTRUCTORS
     public Square() {
-
+        this(4);
     }
     public Square(double side) {
-
+        this(0, 0, side);
     }
     public Square(int x, int y, double side) {
         super(x, y, side, side);
     }
     public Square(Square square) {
-
+        super(square);
     }
     //GETTERS
     public void setSide(double side) {
