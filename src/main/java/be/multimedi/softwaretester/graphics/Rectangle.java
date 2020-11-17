@@ -5,8 +5,7 @@ public class Rectangle {
     public static final int CORNERS = 4;
     public static final String DESCRIPTION = "I am a Rectangle";
 
-    private int x;
-    private int y;
+    private Cartesian2D coordinates;
     private double height;
     private double width;
 
@@ -15,29 +14,24 @@ public class Rectangle {
         this(4.2, 5);
     }
     public Rectangle(double height, double width) {
-        this(0, 0, height, width);
+        this(new Cartesian2D(0, 0), height, width);
     }
-    public Rectangle(int x, int y, double height, double width) {
-        this.setX(x);
-        this.setY(y);
+    public Rectangle(Cartesian2D coordinates, double height, double width) {
+        setCoordinates(coordinates);
         this.setHeight(height);
         this.setWidth(width);
     }
     public Rectangle(Rectangle rect) {
         this(
-                rect.getX(),
-                rect.getY(),
+                rect.getCoordinates(),
                 rect.getHeight(),
                 rect.getWidth()
         );
     }
 
     //GETTERS
-    public int getX() {
-        return this.x;
-    }
-    public int getY() {
-        return this.y;
+    public Cartesian2D getCoordinates() {
+        return coordinates;
     }
     public double getHeight() {
         return this.height;
@@ -53,13 +47,8 @@ public class Rectangle {
     }
 
     //SETTERS
-    public void setX(int x) {
-        checkIfNegativeThrowException(x);
-        this.x = x;
-    }
-    public void setY(int y) {
-        checkIfNegativeThrowException(y);
-        this.y = y;
+    public void setCoordinates(Cartesian2D coordinates) {
+        this.coordinates = coordinates;
     }
     public void setHeight(double height) {
         checkIfZeroThrowException(height);
@@ -71,12 +60,6 @@ public class Rectangle {
     }
 
     //METHODS
-    private void checkIfNegativeThrowException(int number) {
-        if (number < 0) {
-            throw new RuntimeException("Position should be positive");
-        }
-    }
-
     private void checkIfZeroThrowException(double number) {
         if (number == 0) {
             throw new RuntimeException("Dimensions can't be zero");
@@ -86,8 +69,7 @@ public class Rectangle {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Rectangle{");
-        sb.append("x=").append(x);
-        sb.append(", y=").append(y);
+        sb.append("coordinates=").append(coordinates);
         sb.append(", height=").append(height);
         sb.append(", width=").append(width);
         sb.append('}');
@@ -101,18 +83,16 @@ public class Rectangle {
 
         Rectangle rectangle = (Rectangle) o;
 
-        if (getX() != rectangle.getX()) return false;
-        if (getY() != rectangle.getY()) return false;
         if (Double.compare(rectangle.getHeight(), getHeight()) != 0) return false;
-        return Double.compare(rectangle.getWidth(), getWidth()) == 0;
+        if (Double.compare(rectangle.getWidth(), getWidth()) != 0) return false;
+        return getCoordinates() != null ? getCoordinates().equals(rectangle.getCoordinates()) : rectangle.getCoordinates() == null;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = getX();
-        result = 31 * result + getY();
+        result = getCoordinates() != null ? getCoordinates().hashCode() : 0;
         temp = Double.doubleToLongBits(getHeight());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(getWidth());

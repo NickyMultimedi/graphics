@@ -8,10 +8,10 @@ public class Square extends Rectangle {
         this(4);
     }
     public Square(double side) {
-        this(0, 0, side);
+        this(new Cartesian2D(0,0), side);
     }
-    public Square(int x, int y, double side) {
-        super(x, y, side, side);
+    public Square(Cartesian2D coordinates, double side) {
+        super(coordinates, side, side);
     }
     public Square(Square square) {
         super(square);

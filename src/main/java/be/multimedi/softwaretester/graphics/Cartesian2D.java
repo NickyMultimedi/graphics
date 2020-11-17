@@ -49,11 +49,11 @@ public class Cartesian2D implements Coordinates {
     }
 
     boolean xIsPositive() {
-        return x > 0;
+        return x >= 0;
     }
 
     boolean yIsPositive() {
-        return y > 0;
+        return y >= 0;
     }
 
     public void moveOverXAxis(int movedOverX) {
@@ -76,5 +76,14 @@ public class Cartesian2D implements Coordinates {
     public void move(int movedOverX, int movedOverY) {
         moveOverXAxis(movedOverX);
         moveOverYAxis(movedOverY);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Cartesian2D{");
+        sb.append("x=").append(x);
+        sb.append(", y=").append(y);
+        sb.append('}');
+        return sb.toString();
     }
 }
